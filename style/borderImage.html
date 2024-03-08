@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div style="--img:url(https://picsum.photos/id/19/300/300)">
+        <img src="https://picsum.photos/id/19/300/300">
+    </div>
+    <div style="--img:url(https://picsum.photos/id/64/300/300)">
+        <img src="https://picsum.photos/id/64/300/300">
+    </div>
+</body>
+<style>
+    div {
+        --w: 250px;
+        /* image width*/
+        --b: 50px;
+        /* control the blur*/
+
+        overflow: hidden;
+        position: relative;
+        display: grid;
+    }
+
+    div:before {
+        content: "";
+        grid-area: 1/1;
+        border-image: var(--img) 2/calc(50% - var(--w)/2 + var(--b))/calc(1.5*var(--b));
+        filter: contrast(.8) blur(var(--b));
+    }
+
+    img {
+        grid-area: 1/1;
+        width: var(--w);
+        aspect-ratio: 1;
+        z-index: 1;
+        object-fit: cover;
+        margin: auto;
+        box-shadow: 0 0 20px #0005;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        grid-auto-flow: column;
+    }
+</style>
+
+</html>

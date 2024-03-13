@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 多边形网站：https://bennettfeely.com/clippy/ -->
+    <div class="box"></div>
+    <div class="box2"></div>
+</body>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgb(255, 255, 255);
+    }
+
+    .box {
+        background-color: #00aa7f;
+        color: azure;
+        width: 200px;
+        height: 225px;
+        text-align: center;
+        line-height: 225px;
+        clip-path: polygon(50% 0%,
+                100% 25%,
+                100% 75%,
+                50% 100%,
+                0% 75%,
+                0% 25%);
+    }
+
+    .box2 {
+        margin-left: 10px;
+        background-color: #00aa7f;
+        color: azure;
+        width: 200px;
+        height: 225px;
+        text-align: center;
+        line-height: 225px;
+        clip-path: polygon(50% 0%,
+                25% 100%,
+                100% 100%);
+    }
+</style>
+
+</html>

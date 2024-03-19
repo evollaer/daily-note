@@ -1,5 +1,6 @@
 ```html
-//父组件
+// 仅适用vue2版本
+// 父组件
 <template>
   <div class="home">
     {{ originStr }}
@@ -24,6 +25,7 @@ export default {
     };
   },
   methods: {
+    // 语法糖版本无需定义该方法
     changeMessage(str) {
       console.log(str);
       this.originStr = str;

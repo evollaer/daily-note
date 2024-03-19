@@ -14,5 +14,5 @@ function initObserver() {
     observer.observe(element, config);
     this.observer = observer;
 }
-
+// 使用完毕后进程中记得关闭observe
 if (this.observer) this.observer.disconnect();

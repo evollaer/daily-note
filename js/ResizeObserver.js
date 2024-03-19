@@ -1,4 +1,4 @@
-
+// 监听元素resize
 function initObserver() {
     const config = {
         attributes: true,

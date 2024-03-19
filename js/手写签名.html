@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div class="page-wrapper">
+            <!-- <div class="top-line">已自动横屏，请在下方签字</div> -->
+            <canvas ref="canvas"></canvas>
+            <div class="btn-line">
+                <button class="btn1">取消</button>
+                <button class="btn2">保存</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    // 移动端需要判断是否横屏
+    let width = document.documentElement.clientWidth,
+        height = document.documentElement.clientHeight,
+        wrapper = document.getElementById("app"),
+        style = "",
+
+        btn1 = document.querySelector('.btn1'),
+        btn2 = document.querySelector('.btn2');
+    console.log(width, height);
+
+    btn1.onclick = function () {
+
+        // 清空当前画布上的所有绘制内容
+        ctx.clearRect(0, 0, config.width, config.height);
+    }
+
+    btn2.onclick = function () {
+        // 保存-将画布内容保存为图片
+        //   let filename = `${createPic()}.png`;
+        //   let filetype = "image/jpeg";
+        //   const base64 = canvas.toDataURL("image/png");
+        //   uploadBase64(filename, base64).then(res => {
+        //     console.log(res.data.url);
+        //   });
+        //   return;
+        // 将canvas上的内容转成blob流
+
+        canvas.toBlob(blob => {
+            // 获取当前时间并转成字符串，用来当做文件名
+            const date = Date.now().toString()
+            // 创建一个 a 标签
+            const a = document.createElement('a')
+            // 设置 a 标签的下载文件名
+            a.download = `${date}.png`
+            // 设置 a 标签的跳转路径为 文件流地址
+            a.href = URL.createObjectURL(blob)
+            // 手动触发 a 标签的点击事件
+            a.click()
+            // 移除 a 标签
+            a.remove()
+        })
+    }
+
+    //产生随机图片名称
+    function createPic() {
+        var now = new Date();
+        var year = now.getFullYear(); //得到年份
+        var month = now.getMonth(); //得到月份
+        var date = now.getDate(); //得到日期
+        var hour = now.getHours(); //得到小时
+        var minu = now.getMinutes(); //得到分钟
+        month = month + 1;
+        if (month < 10) month = "0" + month;
+        if (date < 10) date = "0" + date;
+        var number = Date.now()
+        var time = year + month + date + hour + minu;
+        return time + "=-=" + number;
+    }
+    // if (width <= height) {
+    //     // 竖屏
+    //     style += "width:100%";
+    //     style += "height:100%;";
+    //     style += "-webkit-transform: rotate(0); transform: rotate(0);";
+    //     style += "-webkit-transform-origin: 0 0;";
+    //     style += "transform-origin: 0 0;";
+    // } else {
+    //     // 横屏
+    //     style += "width:" + height + "px;"; // 注意旋转后的宽高切换
+    //     style += "height:" + width + "px;";
+    //     style += "-webkit-transform: rotate(90deg); transform: rotate(90deg);";
+    //     // 注意旋转中点的处理
+    //     style +=
+    //         "-webkit-transform-origin: " + width / 2 + "px " + width / 2 + "px;";
+    //     style += "transform-origin: " + width / 2 + "px " + width / 2 + "px;";
+    // }
+    // wrapper.style.cssText = style;
+
+    let data = {
+        ctx: null,
+        config: null,
+        canvas: null,
+    }
+    let ctx = null
+    let config = null
+    let canvas = null
+
+    // 配置内容
+    config = {
+        width: 710, // 宽度
+        height: 356, // 高度
+        lineWidth: 2, // 线宽
+        strokeStyle: "black", // 线条颜色
+        lineCap: "round", // 设置线条两端圆角
+        lineJoin: "round" // 线条交汇处圆角
+    };
+    // 获取canvas 实例
+    canvas = document.querySelector("canvas");
+    // console.log(canvas);
+    // 设置宽高
+    canvas.width = config.width;
+    canvas.height = config.height;
+    // 设置一个边框，方便我们查看及使用
+    canvas.style.border = "1px solid #ccc";
+    // 创建上下文
+    ctx = canvas.getContext("2d");
+    // 设置填充背景色
+    ctx.fillStyle = "#fff";
+    // 绘制填充矩形
+    ctx.fillRect(
+        0, // x 轴起始绘制位置
+        0, // y 轴起始绘制位置
+        config.width, // 宽度
+        config.height // 高度
+    );
+    // 保存上次绘制的 坐标及偏移量
+    const client = {
+        offsetX: 0, // 偏移量
+        offsetY: 0,
+        endX: 0, // 坐标
+        endY: 0
+    };
+    // 判断是否为移动端
+    let mobileStatus = false; //mobileStatus为true时则表示为移动端，反之则为web端
+    // const mobileStatus = (/Mobile|Android|iPhone/i.test(navigator.userAgent))
+
+    // 初始化
+    const init = event => {
+        // 获取偏移量及坐标
+        const { offsetX, offsetY, pageX, pageY } = mobileStatus
+            ? event.changedTouches[0]
+            : event;
+
+        // 修改上次的偏移量及坐标
+        client.offsetX = offsetX;
+        client.offsetY = offsetY;
+        client.endX = pageX;
+        client.endY = pageY;
+
+        // 清除以上一次 beginPath 之后的所有路径，进行绘制
+        ctx.beginPath();
+
+        // 根据配置文件设置进行相应配置
+        ctx.lineWidth = config.lineWidth;
+        ctx.strokeStyle = config.strokeStyle;
+        ctx.lineCap = config.lineCap;
+        ctx.lineJoin = config.lineJoin;
+
+        // 设置画线起始点位
+        ctx.moveTo(client.offsetX, client.offsetY);
+
+        // 监听 鼠标移动或手势移动
+        window.addEventListener(mobileStatus ? "touchmove" : "mousemove", draw, {
+            passive: false
+        });
+        window.addEventListener("click", draw2, { passive: false });
+    };
+    // 绘制
+    const draw = event => {
+        event.preventDefault();
+        // console.log(event,'event');
+        // console.log(client,'client');
+        // 获取当前坐标点位
+        const { offsetX, offsetY } = mobileStatus
+            ? event.changedTouches[0]
+            : event;
+        // 修改最后一次绘制的坐标点
+        client.endX = offsetX;
+        client.endY = offsetY;
+
+        // 根据坐标点位移动添加线条
+        ctx.lineTo(offsetX, offsetY);
+
+        // 绘制
+        ctx.stroke();
+    };
+    const draw2 = event => {
+        console.log(event);
+        const { offsetX, offsetY } = event;
+        client.endX = offsetX;
+        client.endY = offsetY;
+        ctx.lineTo(offsetX, offsetY);
+        // 绘制
+        ctx.stroke();
+    };
+    // 结束绘制
+    const cloaseDraw = () => {
+        // 结束绘制
+        ctx.closePath();
+        // 移除鼠标移动或手势移动监听器
+        window.removeEventListener(
+            mobileStatus ? "touchmove" : "mousemove",
+            draw,
+            {
+                passive: false
+            }
+        );
+        window.removeEventListener("click", draw2, { passive: false });
+    };
+
+    // 创建鼠标/手势按下监听器
+    window.addEventListener(mobileStatus ? "touchstart" : "mousedown", init);
+    // 创建鼠标/手势 弹起/离开 监听器
+    window.addEventListener(mobileStatus ? "touchend" : "mouseup", cloaseDraw);
+</script>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    .page-wrapper {
+        width: 710px;
+        height: 500px;
+        display: flex;
+        box-sizing: border-box;
+        flex-direction: column;
+        overflow: hidden;
+
+    }
+
+    .btn-line {
+        display: flex;
+        width: auto;
+        justify-content: flex-end;
+        margin-top: 10px;
+
+    }
+
+    button {
+        margin: 0.1rem 0 0.1rem 0.1rem;
+    }
+</style>
+
+</html>

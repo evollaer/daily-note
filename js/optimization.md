@@ -58,3 +58,38 @@ if (["evollaer", "詹姆斯", "科比", "杜兰特"].includes(name)) {
   // 进行对应的操作
 }
 ```
+
+### 4、将 forEach+splice 的方式 替换成 findIndex+splice
+
+```js
+// 优化前：
+list.forEach((item, index) => {
+  if (item == row.id) {
+    list.splice(index, 1);
+  }
+});
+// 优化后：
+list.splice(
+  list.findIndex((item) => item === row.id),
+  1
+);
+```
+
+### 5、解构方式解决太多重复对象的代码
+
+```js
+// 优化前：
+const data = {
+  time: form.time,
+  type: form.type,
+  name: input.value, // 只有少数不一样的
+  advice: form.advice,
+  depart: form.depart,
+  departId: form.departId,
+};
+// 优化后：
+const data = {
+  ...form,
+  name: input.value,
+};
+```

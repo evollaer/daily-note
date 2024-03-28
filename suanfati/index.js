@@ -1,4 +1,4 @@
-//1、冒泡排序
+// 1、冒泡排序
 let arr = [16, 31, 12, 1, 9, 12, 10];
 function bubbleSort(arr) {
     for (let i = 0; i < arr.length - 1; i++) {
@@ -12,7 +12,7 @@ function bubbleSort(arr) {
 }
 bubbleSort(arr)
 
-// 旅程最优化-贪心算法
+// 2、旅程最优化-贪心算法
 const spots = [
     { name: '故宫', time: 1, score: 7 },
     { name: '颐和园', time: 2, score: 8 },
@@ -48,5 +48,20 @@ function getMaxValueSpots(maxTime, spots) {
 }
 
 const maxTime = 4;
-const result = getMaxValueSpots(maxTime, spots);
-console.log(result); // ["长城", "颐和园"]
+const result1 = getMaxValueSpots(maxTime, spots);
+console.log(result1); // ["长城", "颐和园"]
+
+
+// 3、数组扁平
+// flat+map
+const arr1 = [1, 2, [4, 5], 6, 7, [8]];
+
+// 使用 map 对每个元素进行操作并用 flat 展平结果
+const result2 = arr1.map(element => Array.isArray(element) ? element : [element]).flat();
+
+console.log(result2); // output: [1, 2, 4, 5, 6, 7, 8]
+// 使用 flatmap
+const arr2 = [1, 2, [4, 5], 6, 7, [8]] ;
+
+console.log(arr2.flatMap((element) => element)); 
+// output :[1, 2, 4, 5, 6, 7, 8]

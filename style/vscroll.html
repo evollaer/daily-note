@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="hover-scrollbar">
+        <div class="inner">
+        </div>
+    </div>
+</body>
+<style>
+    .hover-scrollbar {
+        width: 400px;
+        height: 300px;
+        overflow: auto;
+        /* scrollbar-color: transparent transparent; */
+        background-color: pink;
+    }
+
+    .inner {
+        width: 300px;
+        height: 500px;
+        background-color: bisque;
+    }
+
+    /* .hover-scrollbar::-webkit-scrollbar-thumb {
+        background-color: transparent;
+    }
+
+    .hover-scrollbar:hover {
+        scrollbar-color: #8a8e99 transparent;
+
+    }
+
+    .hover-scrollbar:hover::-webkit-scrollbar-thumb {
+        background-color: #8a8e99;
+    } */
+
+    /* 修改滚动条样式 */
+    /* 设置滚动条 */
+    .hover-scrollbar::-webkit-scrollbar {
+        width: 5px;
+        /* background-color: transparent; */
+        border-radius: 5px;
+    }
+
+    /* 设置滚动条滑块 */
+    .hover-scrollbar::-webkit-scrollbar-thumb {
+        background-color: transparent;
+        border-radius: 5px;
+    }
+
+    /* 设置滚动条滑块在悬停状态下的背景色和圆角 */
+    .hover-scrollbar:hover::-webkit-scrollbar-thumb {
+        background-color: #999;
+        border-radius: 5px;
+    }
+
+    /* 设置滚动条轨道的背景色和圆角 */
+    .hover-scrollbar::-webkit-scrollbar-track {
+        background-color: transparent;
+        border-radius: 5px;
+    }
+
+    /* 设置滚动条轨道在悬停状态下的背景色和圆角 */
+    .hover-scrollbar:hover::-webkit-scrollbar-track {
+        background-color: #ccc;
+    }
+
+    .hover-scrollbar::-webkit-scrollbar-corner {
+        background-color: cyan;
+    }
+
+    .hover-scrollbar::-webkit-scrollbar-button {
+        background-color: pink;
+        border-radius: 20px;
+        width: 10px;
+    }
+</style>
+
+</html>

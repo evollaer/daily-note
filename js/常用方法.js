@@ -34,3 +34,16 @@ export function formatDate(value) {
     let s = date.getSeconds().toString().padStart(2, '0');
     return `${y}-${MM}-${d} ${h}:${m}:${s}`;
 }
+
+// 单位转换，写法值得一览
+export function formatSizeUnits(kb) {
+    let units = ['KB', 'MB', 'GB', 'TB', 'PB'];
+    let unitIndex = 0;
+
+    while (kb >= 1024 && unitIndex < units.length - 1) {
+        kb /= 1024;
+        unitIndex++;
+    }
+
+    return `${kb.toFixed(2)} ${units[unitIndex]}`;
+}

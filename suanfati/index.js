@@ -49,7 +49,7 @@ function getMaxValueSpots(maxTime, spots) {
 
 const maxTime = 4;
 const result1 = getMaxValueSpots(maxTime, spots);
-console.log(result1); // ["长城", "颐和园"]
+console.log(result1); // ["故宫", "天坛", "颐和园"]
 
 
 // 3、数组扁平

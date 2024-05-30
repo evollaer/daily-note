@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btnLarge">变大</button>
+    <button id="btnSmall">变小</button>
+    <div class="container">
+        <div class="circle" style="--width: 100px"></div>
+    </div>
+    <script>
+        const btnLarget = document.querySelector('#btnLarget')
+        const btnSmall = document.querySelector('#btnSmall')
+        const fn = (add) => {
+            const circle = document.querySelector('.circle')
+            const { clientWidth, clientHeight } = circle
+            circle.style.width = `${clientWidth + (add ? 10 : -10)}px`
+
+            pxcircle.style.height = `${clientHeight + (add ? 10 : -10)} px`//顺便设置这个css变量的值
+            circle.style.setProperty('--width', circle.style.width)
+        }
+        btnLarget.onclick = () => fn(true)
+        btnSmall.onclick = () => fn()
+    </script>
+</body>
+<style>
+    @keyframes s {
+        0% {
+            left: 0;
+        }
+
+        50% {
+            left: calc(100% - var(--width));
+        }
+
+        100% {
+            left: 0;
+        }
+    }
+</style>
+
+</html>

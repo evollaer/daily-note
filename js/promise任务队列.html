@@ -33,6 +33,7 @@
             };
             this.count++;
             let res = await promiseCreator();
+
             this.count--;
             if (this.queue.length) {
                 // 依次唤醒add// 若队列中有值，将其resolve弹出，并执行
@@ -46,6 +47,7 @@
     const timeout = time =>
         new Promise(resolve => {
             setTimeout(resolve, time);
+            // setTimeout(()=>{return resolve()}, time);
         })
     const scheduler = new Scheduler(2);
     const addTask = (time, order) => {

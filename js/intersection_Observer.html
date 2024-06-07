@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="index.js" defer></script>
+</head>
+
+<body>
+    <div class="card-container">
+        <div class="card">这是第一行</div>
+        <div class="card">这是第二行</div>
+        <div class="card">这是第三行</div>
+        <div class="card">这是第四行</div>
+        <div class="card">这是第五行</div>
+        <div class="card">这是第六行</div>
+        <div class="card">这是第七行</div>
+        <div class="card">这是第八行</div>
+        <div class="card">这是第九行</div>
+        <div class="card">这是第10行</div>
+        <div class="card">这是第11行</div>
+        <div class="card">这是第12行</div>
+        <div class="card">这是第13行</div>
+    </div>
+    <script>
+        const cards = document.querySelectorAll('.card');
+        const cardparent = document.querySelector('.card-container')
+
+        const observe = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.toggle("show", entry.isIntersecting)
+                }
+
+            })
+        })
+
+        cards.forEach((card) => {
+            observe.observe(card)
+        })
+
+
+        const cardContainer = document.querySelector('.card-container')
+
+
+        function loadNewCards() {
+            for (let i = 0; i < 10; i++) {
+                const card = document.createElement("div")
+                card.textContent = "new card";
+                card.classList.add("card")
+                observe.observe(card)
+                cardContainer.appendChild(card)
+            }
+        }
+
+        const lastCardObserve = new IntersectionObserver((entries) => {
+            const lastCard = entries[0]
+            if (!lastCard.isIntersecting) return;
+            loadNewCards();
+            lastCardObserve.unobserve(lastCard.target)
+            lastCardObserve.observe(document.querySelector(".card:last-child"))
+        }, {
+            rootMargin: "100px"
+        });
+
+        lastCardObserve.observe(document.querySelector(".card:last-child"))
+    </script>
+</body>
+<style>
+    .card-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-gap: 10px;
+        padding: 10px;
+    }
+
+    .card {
+        background-color: #f5f5f5;
+        border-radius: 5px;
+        padding: 10px;
+        text-align: center;
+        font-size: 2rem;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .show {
+        animation: slideFromRight 0.5s ease-in-out;
+        animation-iteration-count: 1;
+        animation-delay: 0.1s;
+    }
+
+    @keyframes slideFromRight {
+        0% {
+            transform: translateX(100%);
+        }
+
+        100% {
+            transform: translateX(0);
+        }
+    }
+</style>
+
+</html>

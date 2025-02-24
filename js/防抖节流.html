@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+ * 简易版防抖函数
+ * @param {Function} func - 需要防抖的函数
+ * @param {number} delay - 延迟时间（毫秒）
+ * @returns {Function} - 返回防抖后的函数
+ */
+        function debounce(func, delay) {
+            let timeout;
+            return function (...args) { // 这里的 ...args 收集所有传入的参数
+                console.log(args);
+                
+                const context = this;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => {
+                    func.apply(context, args); // 将收集到的参数传递给 func
+                }, delay);
+            };
+        }
+
+        // 原始函数
+        function greet(greeting, name) {
+            console.log(`${greeting}, ${name}!`);
+        }
+
+        // 创建防抖后的函数
+        const debouncedGreet = debounce(greet, 300);
+
+        // 调用防抖后的函数，并传递参数
+        debouncedGreet("Hello", "Alice"); // 300ms 后输出: "Hello, Alice!"
+        
+    </script>
+</body>
+
+</html>

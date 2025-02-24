@@ -33,7 +33,8 @@ fn: debounce(function () {
 export const debounce = (fn, delay) => {
     var timer;
     return function () {
-        var args = arguments;
+        const args = arguments;
+        const context = this;
         if (timer) {
             clearTimeout(timer);
         }

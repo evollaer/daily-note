@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="input" />
+    <div id="content">内容：</div>
+</body>
+<script>
+    function handler() {
+        const value = document.getElementById('input').value;
+        document.getElementById('content').innerHTML = `内容：${value}`;
+    }
+    function throttle(fn, time) {
+        let timer = null;
+        return function (...args) {
+            if (timer) return
+            timer = setTimeout(() => {
+                fn(args)
+                // clearTimeout(timer)
+                timer = null
+            }, time);
+        }
+    }
+    document.getElementById('input').addEventListener('input', throttle(handler, 1000))
+</script>
+
+</html>

@@ -85,3 +85,13 @@ window.addEventListener("resize", debouncedResize);
 const onScroll = () => console.log("滚动事件触发");
 const throttledScroll = throttle(onScroll, 200);
 window.addEventListener("scroll", throttledScroll);
+
+function debounce(fn,time){
+    let timer = null;
+    return function(...args){
+        clearTimeout(timer)
+        setTimeout(() => {
+            fn(args)
+        }, time);
+    }
+}
